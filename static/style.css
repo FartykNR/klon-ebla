@@ -1,0 +1,97 @@
+/* Тёмная тема по умолчанию */
+:root {
+    --bg-color: #0d1117;
+    --text-color: #c9d1d9;
+    --card-bg: #161b22;
+    --accent: #58a6ff;
+    --border: #30363d;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Карточки постов */
+.post-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.post-img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
+}
+
+.card-text {
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.meta {
+    font-size: 0.9rem;
+    color: #8b949e;
+    margin-top: 1rem;
+}
+
+/* Кнопки действий */
+.btn-like, .btn-comment {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.btn-like:hover, .btn-comment:hover {
+    color: var(--accent);
+}
+
+/* Форма создания поста */
+.form-control, .form-control:focus {
+    background-color: #0d1117;
+    border-color: var(--border);
+    color: var(--text-color);
+}
+
+.form-control::placeholder {
+    color: #8b949e;
+}
+
+/* Заголовок страницы */
+h1 {
+    color: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
