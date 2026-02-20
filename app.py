@@ -40,18 +40,37 @@ def index():
 @app.route("/new", methods=["GET", "POST"])
 def new_post():
     if request.method == "POST":
-        title = request.form["title"]
-        content = request.form["content"]
-        image = request.files.get("image")
+        title = request.form.get("title", "").strip()
+        content = request.form.get("content", "").strip()
+
         image_path = None
-        if image and image.filename:
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-            image_path = filename
+
+        # Отладка: смотри в терминале / логах Render
+        print("Полученные файлы:", request.files)
+        print("Полученные поля формы:", request.form)
+
+        if "image" in request.files:
+            file = request.files["image"]
+            if file and file.filename:  # ← проверка на наличие и непустое имя
+                filename = secure_filename(file.filename)
+                upload_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                try:
+                    file.save(upload_path)
+                    image_path = filename
+                    print(f"Файл успешно сохранён: {upload_path}")
+                except Exception as e:
+                    print(f"Ошибка сохранения файла: {e}")
+                    # Можно добавить flash-сообщение пользователю, но пока просто лог
+            else:
+                print("Файл не выбран или пустой filename")
+
+        # Создаём пост даже если картинки нет
         new_post = Post(title=title, content=content, image_path=image_path)
         db.session.add(new_post)
         db.session.commit()
+
         return redirect(url_for("index"))
+
     return render_template("new_post.html")
 
 
