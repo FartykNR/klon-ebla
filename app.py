@@ -5,7 +5,18 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+import os
+
+# ... весь остальной код выше ...
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL",
+    "sqlite:///database.db",  # на случай локального запуска без переменной
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_pre_ping": True
+}  # опционально, но полезно для стабильности
 app.config["UPLOAD_FOLDER"] = "uploads"
 app.config["SECRET_KEY"] = "super-secret-key-123"  # для формы, пока не важно
 
@@ -59,11 +70,12 @@ def post(id):
 
 from flask import send_from_directory
 
-@app.route('/uploads/<filename>')
+
+@app.route("/uploads/<filename>")
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Render передаст свой порт
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, host="0.0.0.0", port=port)
