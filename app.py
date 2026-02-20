@@ -7,6 +7,13 @@ from datetime import datetime
 app = Flask(__name__)
 import os
 
+
+import logging
+
+# Настройка logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # ... весь остальной код выше ...
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
@@ -40,37 +47,39 @@ def index():
 @app.route("/new", methods=["GET", "POST"])
 def new_post():
     if request.method == "POST":
-        title = request.form.get("title", "").strip()
-        content = request.form.get("content", "").strip()
+        logger.info("=== POST-запрос на /new пришёл ===")
+        logger.info("Форма: %s", dict(request.form))
+        logger.info("Файлы: %s", list(request.files.keys()))
+        logger.info("Все request.files: %s", request.files)
+
+        title = request.form.get("title", "")
+        content = request.form.get("content", "")
 
         image_path = None
-
-        # Отладка: смотри в терминале / логах Render
-        print("Полученные файлы:", request.files)
-        print("Полученные поля формы:", request.form)
-
         if "image" in request.files:
             file = request.files["image"]
-            if file and file.filename:  # ← проверка на наличие и непустое имя
+            logger.info("Файл из формы: %s", file.filename if file else "Нет файла")
+            if file and file.filename != "":
                 filename = secure_filename(file.filename)
                 upload_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
                 try:
                     file.save(upload_path)
                     image_path = filename
-                    print(f"Файл успешно сохранён: {upload_path}")
+                    logger.info("УСПЕХ: файл сохранён как %s", filename)
                 except Exception as e:
-                    print(f"Ошибка сохранения файла: {e}")
-                    # Можно добавить flash-сообщение пользователю, но пока просто лог
+                    logger.error("ОШИБКА сохранения: %s", e)
             else:
-                print("Файл не выбран или пустой filename")
+                logger.warning("Файл не выбран или filename пустой")
 
-        # Создаём пост даже если картинки нет
+        logger.info("Создаём пост с image_path = %s", image_path)
         new_post = Post(title=title, content=content, image_path=image_path)
         db.session.add(new_post)
         db.session.commit()
+        logger.info("Пост сохранён в БД с id = %s", new_post.id)
 
         return redirect(url_for("index"))
 
+    logger.info("GET-запрос на /new")
     return render_template("new_post.html")
 
 
