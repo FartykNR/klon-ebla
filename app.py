@@ -25,6 +25,8 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_pre_ping": True
 }  # опционально, но полезно для стабильности
 app.config["UPLOAD_FOLDER"] = "uploads"
+app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "uploads")
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 app.config["SECRET_KEY"] = "super-secret-key-123"  # для формы, пока не важно
 
 db.init_app(app)
