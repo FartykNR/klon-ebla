@@ -2,11 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from models import db, Post
 from werkzeug.utils import secure_filename
 import os
-from datetime import datetime
-
 app = Flask(__name__)
-import os
-
 
 import logging
 
@@ -24,7 +20,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_pre_ping": True
 }  # опционально, но полезно для стабильности
-app.config["UPLOAD_FOLDER"] = "uploads"
+app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "uploads")
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 app.config["SECRET_KEY"] = "super-secret-key-123"  # для формы, пока не важно
 
 db.init_app(app)

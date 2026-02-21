@@ -69,11 +69,11 @@
     <div class="container py-5">
         <h1 class="text-center mb-5 text-white">Создать пост</h1>
 
+        <form id="postForm" method="POST" enctype="multipart/form-data">
         <div class="row g-5">
             <!-- Левая часть: форма -->
             <div class="col-lg-7">
                 <div class="form-section shadow">
-                    <form id="postForm" method="POST" enctype="multipart/form-data">
                         <div class="mb-4">
                             <label for="title" class="form-label fs-5 fw-bold">Заголовок</label>
                             <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary"
@@ -97,7 +97,6 @@
                             </button>
                             <a href="/" class="btn btn-outline-secondary btn-lg">Отмена</a>
                         </div>
-                    </form>
                 </div>
             </div>
 
@@ -110,6 +109,8 @@
         <small class="text-muted">jpg, png, gif, webp • до 10 МБ</small>
     </div>
 </div>
+        </div>
+    </form>
 
 </body>
 
