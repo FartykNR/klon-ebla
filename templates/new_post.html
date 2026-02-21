@@ -69,35 +69,33 @@
     <div class="container py-5">
         <h1 class="text-center mb-5 text-white">Создать пост</h1>
 
+        <form id="postForm" method="POST" enctype="multipart/form-data"></form>
         <div class="row g-5">
             <!-- Левая часть: форма -->
             <div class="col-lg-7">
                 <div class="form-section shadow">
-                    <form id="postForm" method="POST" enctype="multipart/form-data">
-                        <div class="mb-4">
-                            <label for="title" class="form-label fs-5 fw-bold">Заголовок</label>
-                            <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary"
-                                id="title" name="title" placeholder="Придумай крутое название..." required autofocus
-                                maxlength="100">
-                        </div>
+                    <div class="mb-4">
+                        <label for="title" class="form-label fs-5 fw-bold">Заголовок</label>
+                        <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary"
+                            id="title" name="title" placeholder="Придумай крутое название..." required autofocus
+                            maxlength="100">
+                    </div>
 
-                        <div class="mb-4">
-                            <label for="content" class="form-label fs-5 fw-bold">Описание / текст</label>
-                            <textarea class="form-control form-control-lg bg-dark text-white border-secondary"
-                                id="content" name="content" rows="8"
-                                placeholder="Расскажи подробнее... Можно эмодзи, ссылки, что угодно"
-                                required></textarea>
-                        </div>
+                    <div class="mb-4">
+                        <label for="content" class="form-label fs-5 fw-bold">Описание / текст</label>
+                        <textarea class="form-control form-control-lg bg-dark text-white border-secondary" id="content"
+                            name="content" rows="8" placeholder="Расскажи подробнее... Можно эмодзи, ссылки, что угодно"
+                            required></textarea>
+                    </div>
 
-                        <!-- Кнопки внизу -->
-                        <div class="d-flex gap-3 mt-5">
-                            <button type="submit" id="submitBtn" class="btn btn-publish btn-lg flex-grow-1 fw-bold">
-                                <span class="spinner-border spinner-border-sm spinner me-2" role="status"></span>
-                                Опубликовать
-                            </button>
-                            <a href="/" class="btn btn-outline-secondary btn-lg">Отмена</a>
-                        </div>
-                    </form>
+                    <!-- Кнопки внизу -->
+                    <div class="d-flex gap-3 mt-5">
+                        <button type="submit" id="submitBtn" class="btn btn-publish btn-lg flex-grow-1 fw-bold">
+                            <span class="spinner-border spinner-border-sm spinner me-2" role="status"></span>
+                            Опубликовать
+                        </button>
+                        <a href="/" class="btn btn-outline-secondary btn-lg">Отмена</a>
+                    </div>
                 </div>
             </div>
 
@@ -111,7 +109,7 @@
                     <small class="text-muted">jpg, png, gif, webp • до 10 МБ</small>
                 </div>
             </div>
-
+            </form>
 </body>
 
 </html>
